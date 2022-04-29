@@ -1,0 +1,5 @@
+#Create files
+*.txt
+
+#Applications
+*.exe
