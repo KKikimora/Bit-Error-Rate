@@ -1,5 +1,6 @@
 #include<iostream>
 #include <fstream>
+#include <chrono>
 
 int main(int argc, char* argv[])
 {
@@ -25,6 +26,25 @@ int main(int argc, char* argv[])
         std::cout << "Second input file isn't exist!" << std::endl;
         return 1;
     }
+    
+    int counterBits{};
+    int counterDiffBits{};
+    auto timeCalStart = std::chrono::system_clock::now();
+
+    while (!input1.eof())
+    {
+       // TO DO
+       // compare of bits
+    }
+
+    auto timeCalEnd = std::chrono::system_clock::now();
+    std::chrono::duration<double> diffTime = timeCalEnd - timeCalStart;
+
+    std::cout << "Numbers of bits compared: " << counterBits << std::endl
+              << "Number of different bits: " << counterDiffBits << std::endl
+              << "BER: " << std::boolalpha << static_cast<bool>(!counterDiffBits) << std::endl
+              << "Calculations time: " << diffTime.count() << " secund" << std::endl;
+
 
     output.close();
     input1.close();
