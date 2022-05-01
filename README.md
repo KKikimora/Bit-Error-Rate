@@ -7,7 +7,7 @@ The result of the program's work is:
 - BER result
 - calculation time
 Additionally, the program generates a log.txt file, where are saved logs describing the program's flow.
-=======================================================================================================================
+========================================================================
 Additional program test.cpp is responsible for generating files that can be used to run the main program.
 Its invocation triggers the launch of the constructor of the Test class responsible for creating files. 
 He may accept other arguments, depending on the needs, in accordance with the constructor's declarations listed below:
