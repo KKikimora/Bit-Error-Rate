@@ -1,5 +1,6 @@
 #Create files
 *.txt
+*.bin
 
 #Applications
 *.exe
