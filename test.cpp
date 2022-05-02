@@ -80,5 +80,18 @@ class Test
 
 int main (int argc, char * argv[])
 {
-    Test(400000000, 85, 0, "file1.bin", "file2.bin");
+	if (argc == 6)
+	{
+		Test(std::stoi(argv[1]), std::stoi(argv[2]), std::stoi(argv[3]), argv[4], argv[5]);
+		return 0;
+	}
+	
+	if (argc == 7)
+	{	
+		Test(std::stoi(argv[1]), std::stoi(argv[2]), std::stoi(argv[3]), std::stoi(argv[4]), argv[5], argv[6]);
+		return 0;
+	}
+  
+    std::cout << "Given wrong arguments!" << std::endl;
+	return 1;
 }
