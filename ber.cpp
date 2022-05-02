@@ -1,41 +1,89 @@
-#include<iostream>
+#include <iostream>
 #include <fstream>
 #include <chrono>
+#include <bitset>
+#include <ctime>
+#include <string>
+
+void compareOfBits(std::bitset<8>& a, std::bitset<8>& b, long long int& counterBits, long long int& counterDiffBits)
+{
+    for (int i = 0; i < 8; ++i)
+    {
+        counterBits++;
+        if (a[i] != b[i]) counterDiffBits++;
+    }
+};
+
+void addLog(std::string&& msg)
+{
+    std::ofstream output;
+    output.open("log.txt", std::ios_base::app);
+    output << "D: ";
+    std::time_t now = time(NULL);
+    output << asctime(gmtime(&now)) << "M: " << msg << std::endl;
+    output.close();
+}
 
 int main(int argc, char* argv[])
 {
-    std::cout << "Bit Error Rate " << std::endl;
-    std::ofstream output ("log.txt");
+    std::cout << "Bit Error Rate" << std::endl;
 
-     if(argc != 3) 
+    addLog("correct start of the program");
+
+     if (argc != 3) 
     {
+        addLog("wrong number of parameters");
         std::cout << "You must give two arguments!" << std::endl;
         return 1;
     }
-
+    
     std::ifstream input1 (argv[1]);
-    if(!input1.good())
+    if (!input1.good())
     {   
+        addLog("don't find first file");
         std::cout << "First input file isn't exist!" << std::endl;
         return 1;
     }
 
+    addLog("correct open first file");
+
     std::ifstream input2 (argv[2]);
-    if(!input2.good())
+    if (!input2.good())
     {
+        addLog("don't find second file");
         std::cout << "Second input file isn't exist!" << std::endl;
         return 1;
     }
-    
-    int counterBits{};
-    int counterDiffBits{};
+
+    addLog("correct open second file");
+
+    long long int counterBits{-8};
+    long long int counterDiffBits{};
     auto timeCalStart = std::chrono::system_clock::now();
 
     while (!input1.eof())
-    {
-       // TO DO
-       // compare of bits
+    {   
+        if (input2.eof())
+        {
+            addLog("second file is too short");
+            std::cout << "Second file is too short!" << std::endl;
+            return 1;
+        }
+
+        std::bitset<8> a, b;
+        input1 >> a;
+        input2 >> b;
+        compareOfBits(a, b, counterBits, counterDiffBits);
     }
+
+    if (!input2.eof())
+    {
+        addLog("first file is too short");
+        std::cout << "First file is too short!" << std::endl;
+        return 1;
+    }
+
+    addLog("correct file compares");
 
     auto timeCalEnd = std::chrono::system_clock::now();
     std::chrono::duration<double> diffTime = timeCalEnd - timeCalStart;
@@ -45,9 +93,12 @@ int main(int argc, char* argv[])
               << "BER: " << std::boolalpha << static_cast<bool>(!counterDiffBits) << std::endl
               << "Calculations time: " << diffTime.count() << " secund" << std::endl;
 
+    addLog("Output: " + std::to_string(counterBits) + ", " + std::to_string(counterDiffBits) + ", " + std::to_string(static_cast<bool>(!counterDiffBits)) + ", " + std::to_string(diffTime.count()) + "s");
 
-    output.close();
     input1.close();
+    addLog("correct close first file");
     input2.close();
+    addLog("correct close second file");
+    addLog("correct end of the program");
     return 0;
 }
