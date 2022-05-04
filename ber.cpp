@@ -90,10 +90,10 @@ int main(int argc, char* argv[])
 
     std::cout << "Numbers of bits compared: " << counterBits << std::endl
               << "Number of different bits: " << counterDiffBits << std::endl
-              << "BER: " << counterDiffBits << std::endl
+              << "BER: " << std::boolalpha << static_cast<bool>(!counterDiffBits) << std::endl
               << "Calculations time: " << diffTime.count() << " secund" << std::endl;
 
-    addLog("Output: " + std::to_string(counterBits) + ", " + std::to_string(counterDiffBits) + ", " + std::to_string(counterDiffBits) + ", " + std::to_string(diffTime.count()) + "s");
+    addLog("Output: " + std::to_string(counterBits) + ", " + std::to_string(counterDiffBits) + ", " + std::to_string(static_cast<bool>(!counterDiffBits)) + ", " + std::to_string(diffTime.count()) + "s");
 
     input1.close();
     addLog("correct close first file");
