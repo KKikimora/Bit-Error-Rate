@@ -4,6 +4,7 @@
 #include <bitset>
 #include <ctime>
 #include <string>
+#include <iomanip> 
 
 void compareOfBits(std::bitset<8>& a, std::bitset<8>& b, long long int& counterBits, long long int& counterDiffBits)
 {
@@ -88,12 +89,14 @@ int main(int argc, char* argv[])
     auto timeCalEnd = std::chrono::system_clock::now();
     std::chrono::duration<double> diffTime = timeCalEnd - timeCalStart;
 
+    double ber = static_cast<double>(counterDiffBits) / counterBits;
+
     std::cout << "Numbers of bits compared: " << counterBits << std::endl
               << "Number of different bits: " << counterDiffBits << std::endl
-              << "BER: " << std::boolalpha << static_cast<bool>(!counterDiffBits) << std::endl
+              << "BER: " << std::setprecision(5) << ber << std::endl
               << "Calculations time: " << diffTime.count() << " secund" << std::endl;
 
-    addLog("Output: " + std::to_string(counterBits) + ", " + std::to_string(counterDiffBits) + ", " + std::to_string(static_cast<bool>(!counterDiffBits)) + ", " + std::to_string(diffTime.count()) + "s");
+    addLog("Output: " + std::to_string(counterBits) + ", " + std::to_string(counterDiffBits) + ", " + std::to_string(ber) + ", " + std::to_string(diffTime.count()) + "s");
 
     input1.close();
     addLog("correct close first file");
